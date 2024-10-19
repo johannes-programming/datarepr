@@ -3,7 +3,7 @@ from typing import *
 __all__ = ["datarepr"]
 
 
-def datarepr(name: Any, /, *args: Any, **kwargs: Any):
+def datarepr(name: Any, /, *args: Any, **kwargs: Any) -> str:
     parts = list()
     for a in args:
         parts.append(repr(a))
