@@ -13,6 +13,25 @@
     <h2>Overview</h2>
     <p>Represent data.</p>
 
+    <h2>Implementation</h2>
+    <pre><code>
+from typing import *
+
+__all__ = ["datarepr"]
+
+
+def datarepr(name: Any, /, *args: Any, **kwargs: Any) -&gt; str:
+    parts = list()
+    for a in args:
+        parts.append(repr(a))
+    for i in kwargs.items():
+        parts.append("%s = %r" % i)
+    content = ", ".join(parts)
+    ans = "%s(%s)" % (name, content)
+    return ans
+
+</code></pre>
+
     <h2>Installation</h2>
     <p>To install <code>datarepr</code>, you can use <code>pip</code>. Open your terminal and run:</p>
 
