@@ -14,7 +14,8 @@
     <p>Represent data.</p>
 
     <h2>Implementation</h2>
-    <pre><code>from typing import *
+    <pre><code>
+from typing import *
 
 __all__ = ["datarepr"]
 
@@ -28,6 +29,7 @@ def datarepr(name: Any, /, *args: Any, **kwargs: Any):
     content = ", ".join(parts)
     ans = "%s(%s)" % (name, content)
     return ans
+
 </code></pre>
 
     <h2>Installation</h2>
