@@ -21,10 +21,10 @@ class TestDatareprFunction(unittest.TestCase):
     def test_keyword_args_only(self):
         """Test with keyword arguments only."""
         result = datarepr("test_function", a=1, b=2, c=3)
-        self.assertEqual(result, "test_function(a = 1, b = 2, c = 3)")
+        self.assertEqual(result, "test_function(a=1, b=2, c=3)")
 
         result = datarepr("test_function", x="x", y="y")
-        self.assertEqual(result, "test_function(x = 'x', y = 'y')")
+        self.assertEqual(result, "test_function(x='x', y='y')")
 
     def test_mixed_args(self):
         """Test with both positional and keyword arguments."""
@@ -74,7 +74,7 @@ class TestDatareprFunction(unittest.TestCase):
         )
         self.assertEqual(
             result,
-            "complex_function([1, 2], {3: 4}, a = 5, b = [6, 7], c = {'key': 'value'})",
+            "complex_function([1, 2], {3: 4}, a=5, b=[6, 7], c={'key': 'value'})",
         )
 
     def test_no_args_at_all(self):
