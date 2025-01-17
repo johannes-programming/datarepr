@@ -29,10 +29,10 @@ class TestDatareprFunction(unittest.TestCase):
     def test_mixed_args(self):
         """Test with both positional and keyword arguments."""
         result = datarepr("test_function", 1, 2, a=3, b=4)
-        self.assertEqual(result, "test_function(1, 2, a = 3, b = 4)")
+        self.assertEqual(result, "test_function(1, 2, a=3, b=4)")
 
         result = datarepr("test_function", "x", "y", z=5)
-        self.assertEqual(result, "test_function('x', 'y', z = 5)")
+        self.assertEqual(result, "test_function('x', 'y', z=5)")
 
     def test_various_types(self):
         """Test with various types of arguments."""
@@ -58,7 +58,7 @@ class TestDatareprFunction(unittest.TestCase):
     def test_special_characters(self):
         """Test with special characters in arguments."""
         result = datarepr("test_function", "a\nb", "\t", key="val\nue")
-        self.assertEqual(result, "test_function('a\\nb', '\\t', key = 'val\\nue')")
+        self.assertEqual(result, "test_function('a\\nb', '\\t', key='val\\nue')")
 
     def test_large_number_of_args(self):
         """Test with a large number of arguments."""
