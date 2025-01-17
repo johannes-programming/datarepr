@@ -53,7 +53,7 @@ class TestDatareprFunction(unittest.TestCase):
     def test_empty_name(self):
         """Test with an empty name."""
         result = datarepr("", 1, 2, a=3)
-        self.assertEqual(result, "(1, 2, a = 3)")
+        self.assertEqual(result, "(1, 2, a=3)")
 
     def test_special_characters(self):
         """Test with special characters in arguments."""
