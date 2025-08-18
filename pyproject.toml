@@ -7,7 +7,6 @@ requires = [
 [project]
 authors = [
     { email = "johannes.programming@gmail.com", name = "Johannes" },
-    { email = "johannes-programming@mailfence.com", name = "Johannes" },
 ]
 classifiers = [
     "Development Status :: 5 - Production/Stable",
@@ -25,7 +24,7 @@ description = "This project allows for common sense data representation."
 keywords = []
 name = "datarepr"
 readme = "README.rst"
-requires-python = ">=3.8"
+requires-python = ">=3.11"
 version = "1.0.1+local"
 
 [project.license]
