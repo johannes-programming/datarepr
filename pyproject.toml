@@ -1,7 +1,7 @@
 [build-system]
 build-backend = "setuptools.build_meta"
 requires = [
-    "setuptools>=61.0.0",
+    "setuptools>=61.0",
 ]
 
 [project]
@@ -25,7 +25,7 @@ keywords = []
 name = "datarepr"
 readme = "README.rst"
 requires-python = ">=3.11"
-version = "1.0.2"
+version = "1.0.2+local"
 
 [project.license]
 file = "LICENSE.txt"
