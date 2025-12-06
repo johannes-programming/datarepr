@@ -1,42 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
     <head>
         <title>datarepr</title>
     </head>
     <body>
-        <div id="top"></div>
-        <div id="overview">
-            <h2>Overview</h2>
-            <p>Represent data.</p>
-        </div>
-        <div id="implement">
-            <h2>Implementation</h2>
-            <pre><code>
-from typing import *
-
-__all__ = ["datarepr"]
-
-
-def datarepr(name: Any, /, *args: Any, **kwargs: Any) -&gt; str:
-    parts = list()
-    for a in args:
-        parts.append(repr(a))
-    for i in kwargs.items():
-        parts.append("%s = %r" % i)
-    content = ", ".join(parts)
-    ans = "%s(%s)" % (name, content)
-    return ans
-
-</code></pre>
-        </div>
-        <div id="install"></div>
-        <div id="testing"></div>
-        <div id="license"></div>
-        <div id="links"></div>
-        <div id="credits"></div>
-        <script src="https://www.johannes-programming.online/script.js"></script>
-        <script>
-            setupBasicProject();
-        </script>
+        <dl class="heading0">
+            <dt><a>datarepr</a></dt>
+            <dd>
+                <dl class="heading1">
+                    <dt id="intro">Introduction</dt>
+                    <dd id="introCorpus">
+                        <p>
+                            This project allows to store the arguments for callables.
+                        </p>
+                    </dd>
+                    <dt id="links">Links</dt>
+                    <dd id="linksCorpus"></dd>
+                    <dt id="install">Installation</dt>
+                    <dd id="installCorpus"></dd>
+                    
+                    <dt id="testing">Testing</dt>
+                    <dd id="testingCorpus"></dd>
+                    <dt id="license">License</dt>
+                    <dd id="licenseCorpus"></dd>
+                    <dt id="impressum">Impressum</dt>
+                    <dd id="impressumCorpus"></dd>
+                </dl>
+            </dd>
+        </dl>
     </body>
+    <script src="https://www.johannes-programming.online/script.js"></script>
+    <script>
+        setupLinksCorpus("datarepr");
+        setupInstallCorpus("datarepr");
+        setupTestingCorpus("datarepr");
+        setupLicenseCorpus("datarepr");
+        setupImpressumCorpus("datarepr");
+        addMetaAndLinkTags();
+    </script>
 </html>
