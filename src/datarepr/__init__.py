@@ -1,2 +1,2 @@
-from datahold.core import *
-from datahold.tests import *
+from datarepr.core import *
+from datarepr.tests import *
