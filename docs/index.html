@@ -8,9 +8,10 @@
             <dt>
                 <a>datarepr</a>
                 <p>
-                    <select>
+                    Version: 
+                    <select id="version">
                         <option>1.0.2</option>
-                        <option>1.1.0</option>
+                        <option selected>1.1.0</option>
                     </select>
                 </p>
             </dt>
@@ -35,6 +36,11 @@
                             </dd>
                             <dt version="1.1.0">datarepr.oxford(*args: Any, conj: Any = "and", default: Any = "") -> Any</dt>
                             <dd version="1.1.0">
+                                <p>
+                                    This function returns a string coordination of <code>args</code> using the given conjunction. 
+                                    The Oxford comma is used for more than two <code>args</code>. 
+                                    If no <code>args</code> are given, then the function returns <code>default</code>.
+                                </p>
                             </dd>
                         </dl>
                     </dd>
