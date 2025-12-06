@@ -21,18 +21,18 @@ class TestDatareprFunction(unittest.TestCase):
     def test_keyword_args_only(self):
         """Test with keyword arguments only."""
         result = datarepr("test_function", a=1, b=2, c=3)
-        self.assertEqual(result, "test_function(a = 1, b = 2, c = 3)")
+        self.assertEqual(result, "test_function(a=1, b=2, c=3)")
 
         result = datarepr("test_function", x="x", y="y")
-        self.assertEqual(result, "test_function(x = 'x', y = 'y')")
+        self.assertEqual(result, "test_function(x='x', y='y')")
 
     def test_mixed_args(self):
         """Test with both positional and keyword arguments."""
         result = datarepr("test_function", 1, 2, a=3, b=4)
-        self.assertEqual(result, "test_function(1, 2, a = 3, b = 4)")
+        self.assertEqual(result, "test_function(1, 2, a=3, b=4)")
 
         result = datarepr("test_function", "x", "y", z=5)
-        self.assertEqual(result, "test_function('x', 'y', z = 5)")
+        self.assertEqual(result, "test_function('x', 'y', z=5)")
 
     def test_various_types(self):
         """Test with various types of arguments."""
@@ -53,12 +53,12 @@ class TestDatareprFunction(unittest.TestCase):
     def test_empty_name(self):
         """Test with an empty name."""
         result = datarepr("", 1, 2, a=3)
-        self.assertEqual(result, "(1, 2, a = 3)")
+        self.assertEqual(result, "(1, 2, a=3)")
 
     def test_special_characters(self):
         """Test with special characters in arguments."""
         result = datarepr("test_function", "a\nb", "\t", key="val\nue")
-        self.assertEqual(result, "test_function('a\\nb', '\\t', key = 'val\\nue')")
+        self.assertEqual(result, "test_function('a\\nb', '\\t', key='val\\nue')")
 
     def test_large_number_of_args(self):
         """Test with a large number of arguments."""
@@ -74,7 +74,7 @@ class TestDatareprFunction(unittest.TestCase):
         )
         self.assertEqual(
             result,
-            "complex_function([1, 2], {3: 4}, a = 5, b = [6, 7], c = {'key': 'value'})",
+            "complex_function([1, 2], {3: 4}, a=5, b=[6, 7], c={'key': 'value'})",
         )
 
     def test_no_args_at_all(self):
