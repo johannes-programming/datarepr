@@ -4,7 +4,7 @@ __all__ = ["datarepr"]
 
 
 def datarepr(name: Any, /, *args: Any, **kwargs: Any) -> str:
-    "Common sense representation."
+    """Common sense representation."""
     parts = list()
     for a in args:
         parts.append(repr(a))
