@@ -33,12 +33,7 @@
                             <dd>
                                 <p>This function allows for common sense representation.</p>
                                 <p>It is implemented as follows:</p>
-                                <pre class="block"><code>from typing import *
-
-__all__ = ["datarepr"]
-
-
-def datarepr(name: Any, /, *args: Any, **kwargs: Any) -> str:
+                                <pre class="block"><code>def datarepr(name: Any, /, *args: Any, **kwargs: Any) -> str:
     "This function allows for common sense representation."
     parts = list()
     for a in args:
