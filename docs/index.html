@@ -8,10 +8,9 @@
             <dt>
                 <a>datarepr</a>
                 <p>
-                    Version: 
+                    Major Version: 
                     <select id="version">
-                        <option>1.0.2</option>
-                        <option selected>1.1.0</option>
+                        <option selected>1</option>
                     </select>
                 </p>
             </dt>
@@ -33,20 +32,8 @@
                             <dt>datarepr.datarepr(name: Any, /, *args: Any, **kwargs: Any) -> str</dt>
                             <dd>
                                 <p>This function allows for common sense representation.</p>
-                            </dd>
-                            <dt version="1.1.0">datarepr.oxford(*args: Any, conj: Any = "and", default: Any = "") -> Any</dt>
-                            <dd version="1.1.0">
-                                <p>
-                                    This function returns a string coordination of <code>args</code> using the given conjunction. 
-                                    The Oxford comma is used for more than two <code>args</code>. 
-                                    If no <code>args</code> are given, then the function returns <code>default</code>.
-                                </p>
-                            </dd>
-                        </dl>
-                    </dd>
-                    <dt id="implement">Implementation</dt>
-                    <dd id="implementCorpus">
-                        <pre class="block"><code>from typing import *
+                                <p>It is implemented as follows:</p>
+                                <pre class="block"><code>from typing import *
 
 __all__ = ["datarepr"]
 
@@ -61,9 +48,22 @@ def datarepr(name: Any, /, *args: Any, **kwargs: Any) -> str:
     content = ", ".join(parts)
     ans = "%s(%s)" % (name, content)
     return ans</code></pre>
+                            </dd>
+                            <dt>datarepr.oxford(*args: Any, conj: Any = "and", default: Any = "") -> Any</dt>
+                            <dd>
+                                <p>
+                                    This function returns a string coordination of <code>args</code> using the given conjunction. 
+                                    The Oxford comma is used for more than two <code>args</code>. 
+                                    If no <code>args</code> are given, then the function returns <code>default</code>.
+                                </p>
+                                <div class="minor">
+                                    <p><span>Added in version 1.1.</span></p>
+                                </div>
+                            </dd>
+                            <dt id="test">test() -> unittest.TextTestResult</dt>
+                            <dd class="testingCorpus"></dd>
+                        </dl>
                     </dd>
-                    <dt id="testing">Testing</dt>
-                    <dd id="testingCorpus"></dd>
                     <dt id="license">License</dt>
                     <dd id="licenseCorpus"></dd>
                     <dt id="impressum">Impressum</dt>
