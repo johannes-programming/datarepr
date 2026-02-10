@@ -8,9 +8,10 @@
             <dt>
                 <a>datarepr</a>
                 <p>
-                    Major Version: 
+                    Minor Version: 
                     <select id="version">
-                        <option selected>1</option>
+                        <option>1.0</option>
+                        <option selected>1.1</option>
                     </select>
                 </p>
             </dt>
@@ -28,7 +29,7 @@
                     <dd id="installCorpus"></dd>
                     <dt id="features">Features</dt>
                     <dd id="featuresCorpus">
-                        <dl class="heading4">
+                        <dl class="heading4" version="1.0 1.1">
                             <dt>datarepr.datarepr(name: Any, /, *args: Any, **kwargs: Any) -> str</dt>
                             <dd>
                                 <p>This function allows for common sense representation.</p>
@@ -44,8 +45,8 @@
     ans = "%s(%s)" % (name, content)
     return ans</code></pre>
                             </dd>
-                            <dt>datarepr.oxford(*args: Any, conj: Any = "and", default: Any = "") -> Any</dt>
-                            <dd>
+                            <dt version="1.1">datarepr.oxford(*args: Any, conj: Any = "and", default: Any = "") -> Any</dt>
+                            <dd version="1.1">
                                 <p>
                                     This function returns a string coordination of <code>args</code> using the given conjunction. 
                                     The Oxford comma is used for more than two <code>args</code>. 
@@ -55,7 +56,7 @@
                                     <p><span>Added in version 1.1.</span></p>
                                 </div>
                             </dd>
-                            <dt id="test">test() -> unittest.TextTestResult</dt>
+                            <dt id="test">datarepr.test() -> unittest.TextTestResult</dt>
                             <dd class="testingCorpus"></dd>
                         </dl>
                     </dd>
