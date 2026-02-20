@@ -68,13 +68,20 @@
             </dd>
         </dl>
     </body>
-    <script src="https://www.johannes-programming.online/script.js"></script>
-    <script>
-        setupLinksCorpus("datarepr");
-        setupInstallCorpus("datarepr");
-        setupTestingCorpus("datarepr");
-        setupLicenseCorpus("datarepr");
+    <script type="module">
+        import {
+            setupImpressumCorpus,
+            setupInstallCorpus,
+            setupLicenseCorpus,
+            setupLinksCorpus,
+            setupTestingCorpus,
+            addMetaAndLinkTags,
+        } from "https://www.johannes-programming.online/main.js";
         setupImpressumCorpus("datarepr");
+        setupInstallCorpus("datarepr");
+        setupLicenseCorpus("datarepr");
+        setupLinksCorpus("datarepr");
+        setupTestingCorpus("datarepr");
         addMetaAndLinkTags();
     </script>
 </html>
