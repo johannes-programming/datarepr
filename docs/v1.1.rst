@@ -1,0 +1,109 @@
+Introduction
+------------
+
+This project allows to store the arguments for callables.
+
+Installation
+------------
+
+To install datarepr, you can use pip. Open your terminal and run:
+
+.. code-block:: shell
+
+    pip install datarepr
+
+Features
+--------
+
+``datarepr.datarepr(name: Any, /, *args: Any, **kwargs: Any) -> str``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This function allows for common sense representation.
+
+It is implemented as follows:
+
+.. code-block:: python
+
+    def datarepr(name: Any, /, *args: Any, **kwargs: Any) -> str:
+        "This function allows for common sense representation."
+        parts = list()
+        for a in args:
+            parts.append(repr(a))
+        for i in kwargs.items():
+            parts.append("%s=%r" % i)
+        content = ", ".join(parts)
+        ans = "%s(%s)" % (name, content)
+        return ans
+
+``datarepr.test() -> unittest.TextTestResult``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This project can be tested through its test function.
+
+.. code-block:: python
+
+    import datarepr
+    datarepr.test()
+
+
+``datarepr.datarepr(name: Any, /, *args: Any, **kwargs: Any) -> str``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This function allows for common sense representation.
+
+It is implemented as follows:
+
+.. code-block:: python
+
+    def datarepr(name: Any, /, *args: Any, **kwargs: Any) -> str:
+        "This function allows for common sense representation."
+        parts = list()
+        for a in args:
+            parts.append(repr(a))
+        for i in kwargs.items():
+            parts.append("%s=%r" % i)
+        content = ", ".join(parts)
+        ans = "%s(%s)" % (name, content)
+        return ans
+
+``datarepr.oxford(*args: Any, conj: Any = "and", default: Any = "") -> Any``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This function returns a string coordination of args using the given conjunction. The Oxford comma is used for more than two args. If no args are given, then the function returns default.
+
+.. container:: versionadded
+    
+    **Added in version 1.1.**
+
+``datarepr.test() -> unittest.TextTestResult``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This project can be tested through its test function.
+
+.. code-block:: python
+
+    import datarepr
+    datarepr.test()
+
+License
+-------
+
+This project is licensed under the MIT License.
+
+Links
+-----
+
+- Download: https://pypi.org/project/datarepr/#files
+- Index: https://pypi.org/project/datarepr/
+- Source: https://github.com/johannes-programming/datarepr/
+- Website: https://datarepr.johannes-programming.online/
+
+Impressum
+---------
+
+**Johannes Programming**
+
+- Name: Johannes
+- Email: johannes.programming@gmail.com
+- Homepage: https://www.johannes-programming.online/
+- Gravatar: https://www.johannes-programming.fyi/
