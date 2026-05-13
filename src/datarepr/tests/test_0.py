@@ -53,7 +53,9 @@ class TestDatareprFunction(unittest.TestCase):
         result = datarepr("test_function", 1, 2.0, True, None)
         self.assertEqual(result, "test_function(1, 2.0, True, None)")
         result = datarepr("test_function", [1, 2], {3, 4}, {"key": "value"})
-        self.assertEqual(result, "test_function([1, 2], {3, 4}, {'key': 'value'})")
+        self.assertEqual(
+            result, "test_function([1, 2], {3, 4}, {'key': 'value'})"
+        )
 
     def test_name_as_non_string(self: Self) -> None:
         "This test tests with the 'name' parameter as a non-string type."
@@ -73,7 +75,9 @@ class TestDatareprFunction(unittest.TestCase):
         "This test tests with special characters in arguments."
         result: str
         result = datarepr("test_function", "a\nb", "\t", key="val\nue")
-        self.assertEqual(result, "test_function('a\\nb', '\\t', key='val\\nue')")
+        self.assertEqual(
+            result, "test_function('a\\nb', '\\t', key='val\\nue')"
+        )
 
     def test_large_number_of_args(self: Self) -> None:
         "This test tests with a large number of arguments."
@@ -89,7 +93,12 @@ class TestDatareprFunction(unittest.TestCase):
         "This test tests with a complex combination of different types and structures."
         result: str
         result = datarepr(
-            "complex_function", [1, 2], {3: 4}, a=5, b=[6, 7], c={"key": "value"}
+            "complex_function",
+            [1, 2],
+            {3: 4},
+            a=5,
+            b=[6, 7],
+            c={"key": "value"},
         )
         self.assertEqual(
             result,
@@ -98,8 +107,12 @@ class TestDatareprFunction(unittest.TestCase):
 
     def test_no_args_at_all(self: Self) -> None:
         "This test tests with no arguments, not even the name."
+        args: Any
+        args = ()
         with self.assertRaises(TypeError):
-            datarepr()  # Should raise a TypeError due to missing required 'name' argument.
+            datarepr(
+                *args
+            )  # Should raise a TypeError due to missing required 'name' argument.
 
 
 if __name__ == "__main__":
