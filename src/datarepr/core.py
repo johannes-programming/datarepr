@@ -1,13 +1,15 @@
-from typing import *
+from typing import TypeVar
 
 __all__ = ["datarepr", "oxford"]
 
+Default = TypeVar("Default")
 
-def datarepr(name: Any, /, *args: Any, **kwargs: Any) -> str:
+
+def datarepr(name: object, /, *args: object, **kwargs: object) -> str:
     "This function allows for common sense representation."
     content: str
-    item: tuple[Any, Any]
-    parts: list
+    item: tuple[str, object]
+    parts: list[str]
     parts = list(map(repr, args))
     for item in kwargs.items():
         parts.append("%s=%r" % item)
@@ -15,16 +17,15 @@ def datarepr(name: Any, /, *args: Any, **kwargs: Any) -> str:
     return "%s(%s)" % (name, content)
 
 
-def oxford(*args: Any, conj: Any = "and", default: Any = "") -> Any:
-    ans: str
+def oxford(
+    *args: object,
+    conj: object = "and",
+    default: Default | str = "",
+) -> Default | str:
     if len(args) == 0:
         return default
     if len(args) == 1:
-        ans = "%r"
-    elif len(args) == 2:
-        ans = f"%r {conj} %r"
-    else:
-        ans = "%r, " * (len(args) - 1)
-        ans += f"{conj} %r"
-    ans %= args
-    return ans
+        return repr(args[0])
+    if len(args) == 2:
+        return f"{args[0]!r} {conj} {args[1]!r}"
+    return ", ".join(map(repr, args[:-1])) + f", {conj} {args[-1]!r}"
