@@ -67,12 +67,6 @@ class TestDatareprFunction(unittest.TestCase):
         expected = "test_function(" + ", ".join(map(str, args)) + ")"
         self.assertEqual(result, expected)
 
-    def test_duplicate_keys(self):
-        """Test what happens when duplicate keys are provided in kwargs."""
-        with self.assertRaises(TypeError):
-            # In Python, duplicate keys in **kwargs should raise an error.
-            datarepr("test_function", 1, 2, a=3, a=4)
-
     def test_combination_of_all(self):
         """Test with a complex combination of different types and structures."""
         result = datarepr(
