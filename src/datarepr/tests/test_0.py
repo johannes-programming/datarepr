@@ -1,5 +1,5 @@
 import unittest
-from typing import *
+from typing import Any, Self
 
 from datarepr.core import datarepr
 
