@@ -120,6 +120,10 @@ class TestDatareprFunction(unittest.TestCase):
         self.assertEqual(
             result, "test_function([1, 2], {3, 4}, {'key': 'value'})"
         )
+        result = datarepr("test_function", [1, 2], {3, 4}, {"key": "value"})
+        self.assertEqual(
+            result, "test_function([1, 2], {3, 4}, {'key': 'value'})"
+        )
 
 
 if __name__ == "__main__":
