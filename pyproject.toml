@@ -28,7 +28,7 @@ license-files = [
 name = "datarepr"
 readme = "README.rst"
 requires-python = ">=3.11"
-version = "1.2.4"
+version = "1.2.5"
 
 [project.urls]
 Download = "https://pypi.org/project/datarepr/#files"
