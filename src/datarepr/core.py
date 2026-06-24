@@ -1,12 +1,14 @@
-from typing import TypeVar
+"""Provide core data representation utilities."""
 
 __all__ = ["datarepr", "oxford"]
+
+from typing import TypeVar
 
 Default = TypeVar("Default")
 
 
 def datarepr(name: object, /, *args: object, **kwargs: object) -> str:
-    "This function allows for common sense representation."
+    """Return a common-sense string representation."""
     content: str
     item: tuple[str, object]
     parts: list[str]
@@ -22,6 +24,7 @@ def oxford(
     conj: object = "and",
     default: Default | str = "",
 ) -> Default | str:
+    """Return repr values joined with an Oxford comma."""
     if len(args) == 0:
         return default
     if len(args) == 1:
