@@ -2,19 +2,61 @@
 
 __all__ = ["TestDatareprFunction"]
 
+import enum
+import io
+import tomllib
 import unittest
-from typing import Any, Self
+from collections.abc import Sequence
+from functools import cached_property
+from pathlib import Path
+from typing import Any, Self, cast
 
 from datarepr.core import datarepr
+
+
+class Lazy(enum.Enum):
+    lazy = None
+
+    @cached_property
+    def data(self: Self) -> dict[str, Any]:
+        file: Path
+        stream: io.BufferedReader
+        file = Path(__file__).parent / "testdata.toml"
+        with file.open("rb") as stream:
+            return tomllib.load(stream)
+
+    @cached_property
+    def test_0(self: Self) -> dict[str, Any]:
+        return cast(dict[str, Any], self.lazy.data["test_0"])
 
 
 class TestDatareprFunction(unittest.TestCase):
     """Test the datarepr function comprehensively."""
 
+    def go_valid(
+        self: Self,
+        name: str,
+        /,
+        *,
+        solution: str,
+        args: Sequence[Any],
+        kwargs: Any = (),
+    ) -> None:
+        """Test the datarepr function with valid parameters."""
+        result: str
+        with self.subTest(name):
+            result = datarepr(*args, **dict(kwargs))
+            self.assertEqual(result, solution)
+
+    def test_0(self: Self) -> None:
+        """Test the testdata."""
+        for x, y in Lazy.lazy.test_0.items():
+            self.go_valid(x, **y)
+
     def test_combination_of_all(self: Self) -> None:
         """Test a complex combination of types and structures."""
-        expected: str
         result: str
+        solution: str
         result = datarepr(
             "complex_function",
             [1, 2],
@@ -23,63 +65,15 @@ class TestDatareprFunction(unittest.TestCase):
             b=[6, 7],
             c={"key": "value"},
         )
-        expected = (
+        solution = (
             "complex_function([1, 2], {3: 4}, a=5,"
             " b=[6, 7], c={'key': 'value'})"
         )
-        self.assertEqual(result, expected)
-
-    def test_empty_args_kwargs(self: Self) -> None:
-        """Test when only the name is provided and no args or kwargs."""
-        result: str
-        result = datarepr("test_function")
-        self.assertEqual(result, "test_function()")
-
-    def test_empty_name(self: Self) -> None:
-        """Test with an empty name."""
-        result: str
-        result = datarepr("", 1, 2, a=3)
-        self.assertEqual(result, "(1, 2, a=3)")
-
-    def test_keyword_args_only(self: Self) -> None:
-        """Test with keyword arguments only."""
-        result: str
-        result = datarepr("test_function", a=1, b=2, c=3)
-        self.assertEqual(result, "test_function(a=1, b=2, c=3)")
-
-    def test_keyword_args_only_1(self: Self) -> None:
-        """Test with string keyword arguments."""
-        result: str
-        result = datarepr("test_function", x="x", y="y")
-        self.assertEqual(result, "test_function(x='x', y='y')")
-
-    def test_large_number_of_args(self: Self) -> None:
-        """Test with a large number of arguments."""
-        args: range
-        expected: str
-        result: str
-        args = range(100)
-        result = datarepr("test_function", *args)
-        expected = "test_function(" + ", ".join(map(str, args)) + ")"
-        self.assertEqual(result, expected)
-
-    def test_mixed_args(self: Self) -> None:
-        """Test with both positional and keyword arguments."""
-        result: str
-        result = datarepr("test_function", 1, 2, a=3, b=4)
-        self.assertEqual(result, "test_function(1, 2, a=3, b=4)")
-
-    def test_mixed_args_1(self: Self) -> None:
-        """Test with string positional and int keyword arguments."""
-        result: str
-        result = datarepr("test_function", "x", "y", z=5)
-        self.assertEqual(result, "test_function('x', 'y', z=5)")
+        self.assertEqual(result, solution)
 
     def test_name_as_non_string(self: Self) -> None:
         """Test with the 'name' parameter as a non-string type."""
         result: str
-        result = datarepr(123, "arg1")
-        self.assertEqual(result, "123('arg1')")
         result = datarepr(None, "arg1")
         self.assertEqual(result, "None('arg1')")
 
@@ -90,18 +84,6 @@ class TestDatareprFunction(unittest.TestCase):
         with self.assertRaises(TypeError):
             # Raise TypeError: missing required 'name' argument.
             datarepr(*args)
-
-    def test_positional_args_only(self: Self) -> None:
-        """Test with positional arguments only."""
-        result: str
-        result = datarepr("test_function", 1, 2, 3)
-        self.assertEqual(result, "test_function(1, 2, 3)")
-
-    def test_positional_args_only_1(self: Self) -> None:
-        """Test with string positional arguments."""
-        result: str
-        result = datarepr("test_function", "a", "b", "c")
-        self.assertEqual(result, "test_function('a', 'b', 'c')")
 
     def test_special_characters(self: Self) -> None:
         """Test with special characters in arguments."""
