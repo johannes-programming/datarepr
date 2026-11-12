@@ -1,13 +1,17 @@
-from typing import *
+"""Provide core data representation utilities."""
 
-__all__ = ["datarepr", "oxford"]
+__all__: list[str] = ["datarepr"]
+
+from typing import Any, TypeVar, overload
+
+Default = TypeVar("Default")
 
 
-def datarepr(name: Any, /, *args: Any, **kwargs: Any) -> str:
-    "This function allows for common sense representation."
+def datarepr(name: object, /, *args: object, **kwargs: object) -> str:
+    """Return a common-sense string representation."""
     content: str
-    item: tuple[Any, Any]
-    parts: list
+    item: tuple[str, object]
+    parts: list[str]
     parts = list(map(repr, args))
     for item in kwargs.items():
         parts.append("%s=%r" % item)
@@ -15,16 +19,29 @@ def datarepr(name: Any, /, *args: Any, **kwargs: Any) -> str:
     return "%s(%s)" % (name, content)
 
 
-def oxford(*args: Any, conj: Any = "and", default: Any = "") -> Any:
-    ans: str
+@overload
+def oxford(
+    *args: object,
+    conj: object = "and",
+    default: str = "",
+) -> str: ...
+@overload
+def oxford(
+    *args: object,
+    conj: object = "and",
+    default: Default,
+) -> Default | str: ...
+@overload
+def oxford(
+    *args: object,
+    conj: object = "and",
+    default: Any = "",
+) -> Any:
+    """Return repr values joined with an Oxford comma."""
     if len(args) == 0:
         return default
     if len(args) == 1:
-        ans = "%r"
-    elif len(args) == 2:
-        ans = f"%r {conj} %r"
-    else:
-        ans = "%r, " * (len(args) - 1)
-        ans += f"{conj} %r"
-    ans %= args
-    return ans
+        return repr(args[0])
+    if len(args) == 2:
+        return f"{args[0]!r} {conj} {args[1]!r}"
+    return ", ".join(map(repr, args[:-1])) + f", {conj} {args[-1]!r}"

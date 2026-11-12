@@ -6,7 +6,8 @@ This project allows to store the arguments for callables.
 Installation
 ------------
 
-To install ``datarepr``, you can use ``pip``. Open your terminal and run:
+To install ``datarepr``, you can use ``pip``.
+Open your terminal and run:
 
 .. code-block:: shell
 
@@ -15,8 +16,8 @@ To install ``datarepr``, you can use ``pip``. Open your terminal and run:
 Features
 --------
 
-``datarepr.datarepr(name: Any, /, *args: Any, **kwargs: Any) -> str``
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+``datarepr.datarepr(name: object, /, *args: object, **kwargs: object) -> str``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This function allows for common sense representation.
 
@@ -35,8 +36,8 @@ It is implemented as follows:
         ans = "%s(%s)" % (name, content)
         return ans
 
-``datarepr.oxford(*args: Any, conj: Any = "and", default: Any = "") -> Any``
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+``datarepr.oxford(*args: object, conj: object = "and", default: str = "") -> str`` ``datarepr.oxford[Default](*args: object, conj: object = "and", default: Default) -> Default | str``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This function returns a string coordination of ``args`` using the given conjunction.
 The Oxford comma is used for more than two ``args``.
