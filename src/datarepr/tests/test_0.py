@@ -1,6 +1,6 @@
 """Test the datarepr function."""
 
-__all__ = ["TestDatareprFunction"]
+__all__: list[str] = ["TestDatareprFunction"]
 
 import enum
 import io
@@ -18,7 +18,7 @@ class Lazy(enum.Enum):
     lazy = None
 
     @cached_property
-    def data(self: Self) -> dict[str, Any]:
+    def data(self: Self, /) -> dict[str, Any]:
         file: Path
         stream: io.BufferedReader
         file = Path(__file__).parent / "testdata.toml"
@@ -26,7 +26,7 @@ class Lazy(enum.Enum):
             return tomllib.load(stream)
 
     @cached_property
-    def test_0(self: Self) -> dict[str, Any]:
+    def test_0(self: Self, /) -> dict[str, Any]:
         return cast(dict[str, Any], self.lazy.data["test_0"])
 
 
@@ -38,9 +38,9 @@ class TestDatareprFunction(unittest.TestCase):
         name: str,
         /,
         *,
-        solution: str,
         args: Sequence[Any],
         kwargs: Any = (),
+        solution: str,
     ) -> None:
         """Test the datarepr function with valid parameters."""
         result: str
@@ -48,12 +48,14 @@ class TestDatareprFunction(unittest.TestCase):
             result = datarepr(*args, **dict(kwargs))
             self.assertEqual(result, solution)
 
-    def test_0(self: Self) -> None:
+    def test_0(self: Self, /) -> None:
         """Test the testdata."""
+        x: Any
+        y: Any
         for x, y in Lazy.lazy.test_0.items():
             self.go_valid(x, **y)
 
-    def test_combination_of_all(self: Self) -> None:
+    def test_combination_of_all(self: Self, /) -> None:
         """Test a complex combination of types and structures."""
         result: str
         solution: str
@@ -71,13 +73,13 @@ class TestDatareprFunction(unittest.TestCase):
         )
         self.assertEqual(result, solution)
 
-    def test_name_as_non_string(self: Self) -> None:
+    def test_name_as_non_string(self: Self, /) -> None:
         """Test with the 'name' parameter as a non-string type."""
         result: str
         result = datarepr(None, "arg1")
         self.assertEqual(result, "None('arg1')")
 
-    def test_no_args_at_all(self: Self) -> None:
+    def test_no_args_at_all(self: Self, /) -> None:
         """Test with no arguments, not even the name."""
         args: Any
         args = ()
@@ -85,7 +87,7 @@ class TestDatareprFunction(unittest.TestCase):
             # Raise TypeError: missing required 'name' argument.
             datarepr(*args)
 
-    def test_special_characters(self: Self) -> None:
+    def test_special_characters(self: Self, /) -> None:
         """Test with special characters in arguments."""
         result: str
         result = datarepr("test_function", "a\nb", "\t", key="val\nue")
@@ -93,7 +95,7 @@ class TestDatareprFunction(unittest.TestCase):
             result, "test_function('a\\nb', '\\t', key='val\\nue')"
         )
 
-    def test_various_types(self: Self) -> None:
+    def test_various_types(self: Self, /) -> None:
         """Test with various types of arguments."""
         result: str
         result = datarepr("test_function", 1, 2.0, True, None)

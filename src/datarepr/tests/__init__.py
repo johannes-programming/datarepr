@@ -1,6 +1,6 @@
 """Provide test utilities for the datarepr package."""
 
-__all__ = ["test"]
+__all__: list[str] = ["test"]
 
 import unittest
 
