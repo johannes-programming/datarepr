@@ -1,6 +1,6 @@
 """Provide core data representation utilities."""
 
-__all__ = ["datarepr", "oxford"]
+__all__: list[str] = ["datarepr", "oxford"]
 
 from typing import TypeVar
 
