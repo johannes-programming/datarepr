@@ -1,7 +1,3 @@
 --sort
---sort
---key=test_0
---sort
---key=test_0
---all-keys
+--
 tests/testdata.toml

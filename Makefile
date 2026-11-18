@@ -1,5 +1,5 @@
 .ONESHELL:
-.PHONY: all add amend beautiful black build canonicalize clean commit commit-version dist echo isort jacobus py311 py312 py313 py314 py315 pypi pyproject-fmt rebase reset test toml_sorted upload version
+.PHONY: all add amend beautiful beautiful-other beautiful-py beautiful-toml black build canonicalize clean commit commit-version dist echo isort jacobus jacobus-other jacobus-py jacobus-toml py311 py312 py313 py314 py315 pypi pyproject-fmt rebase reset ruff test toml-sorted upload version
 SHELL := /bin/zsh
 
 all: beautiful commit-version
@@ -10,7 +10,13 @@ add:
 amend: add
 	git commit --amend --no-edit;
 
-beautiful: canonicalize isort black jacobus toml_sorted
+beautiful: beautiful-other beautiful-py beautiful-toml
+
+beautiful-other: jacobus-other
+
+beautiful-py: jacobus-py ruff
+
+beautiful-toml: canonicalize toml-sorted pyproject-fmt
 
 black: py311
 	conda run -n py311 pip install 'black>=24.5,<26' >/dev/null;
@@ -25,16 +31,16 @@ canonicalize: py311
 	conda run -n py311 pip install 'tomli-w<2,>=1.2';
 	conda run -n py311 python make/canonicalize.py -- .;
 
+clean:
+	rm -fr 'dist/';
+	rm -fr 'out/';
+
 commit: add
 	git commit --allow-empty $(PARAMS);
 
 commit-version: add py311
 	conda run -n py311 pip install 'toml-get>=1.1,<2' >/dev/null;
 	git commit --allow-empty "$$(conda run -n py311 python -m toml_get @make/toml_get.txt)";
-
-clean:
-	rm -fr 'dist/';
-	rm -fr 'out/';
 
 dist: clean build
 
@@ -45,11 +51,22 @@ isort: py311
 	conda run -n py311 pip install 'isort>=6.0,<7' >/dev/null;
 	conda run -n py311 isort . ;
 
-jacobus: py311
-	conda run -n py311 pip install 'jacobus>=2.3,<3' >/dev/null;
-	conda run -n py311 python -m jacobus @make/jacobus.txt;
+jacobus: jacobus-other jacobus-py jacobus-toml py311
+
+jacobus-other: py311
+	conda run -n py311 pip install 'jacobus>=2.4,<3' >/dev/null;
 	conda run -n py311 python -m jacobus @make/jacobus_empty.txt;
+	cat make/manifest.txt >> MANIFEST.in;
 	conda run -n py311 python -m jacobus @make/jacobus_sort.txt;
+	conda run -n py311 python -m jacobus @make/jacobus_other_indent.txt;
+
+jacobus-py: py311
+	conda run -n py311 pip install 'jacobus>=2.4,<3' >/dev/null;
+	conda run -n py311 python -m jacobus @make/jacobus_py.txt;
+
+jacobus-toml: py311
+	conda run -n py311 pip install 'jacobus>=2.4,<3' >/dev/null;
+	conda run -n py311 python -m jacobus @make/jacobus_toml.txt;
 
 py311:
 	conda run -n base python make/env.py py311 --python=3.11;
@@ -69,32 +86,40 @@ py315:
 pypi: dist upload
 
 pyproject-fmt: py311
-	conda run -n py311 pyproject-fmt pyproject.toml
+	conda run -n py311 pip install "pyproject-fmt<3,>=2.30";
+	conda run -n py311 pyproject-fmt pyproject.toml || conda run -n py311 pyproject-fmt --check pyproject.toml;
 
 rebase:
 	git rebase --empty=drop --interactive $(PARAMS);
 
 reset:
-	git reset HEAD~1 ;
+	git reset HEAD~1;
+
+ruff: py311
+	conda run -n py311 python -m pip install "ruff>=0.14,<1";
+	conda run -n py311 ruff check --fix . ;
+	conda run -n py311 ruff format . ;
 
 test: dist py311
 	mkdir dist/out/ ;
-	conda run -n py311 pip install "style-checker>=0.1.7,<0.2";
+	conda run -n py311 pip install "style-checker<0.2,>=0.1.8";
 	conda run -n py311 python -m style_checker -- "**/*.py" > dist/out/style_checker_out.txt 2> dist/out/style_checker_err.txt || true;
 	conda run -n base python make/env.py test_datarepr_mypy --python=3.11 --recreate >/dev/null;
 	conda run -n test_datarepr_mypy pip install dist/*.tar.gz >/dev/null;
-	conda run -n test_datarepr_mypy python make/run_introspection.py > dist/out/introspection_out.txt 2> dist/out/introspection_err.txt || true;
-	conda run -n test_datarepr_mypy pip install mypy >/dev/null;
-	conda run -n test_datarepr_mypy python -m mypy --exclude build --exclude dist --exclude make --exclude tests/examples --strict . > dist/out/mypy_dir_out.txt 2> dist/out/mypy_dir_err.txt || true;
+	conda run -n test_datarepr_mypy python run_introspection.py > dist/out/introspection_out.txt 2> dist/out/introspection_err.txt || true;
+	conda run -n test_datarepr_mypy pip install "mypy<3,>=2.4" >/dev/null;
+	conda run -n test_datarepr_mypy python -m mypy --exclude build --exclude dist --exclude make --strict . > dist/out/mypy_dir_out.txt 2> dist/out/mypy_dir_err.txt || true;
 	conda run -n test_datarepr_mypy python -m mypy --strict -p datarepr > dist/out/mypy_pkg_out.txt 2> dist/out/mypy_pkg_err.txt || true;
+	conda run -n py311 pip install "mypy<3,>=2.4";
 	conda run -n py311 python -m mypy --strict make > dist/out/mypy_make_out.txt 2> dist/out/mypy_make_err.txt || true;
 	conda run -n base python make/env.py test_datarepr_tests --python=3.11 --recreate >/dev/null;
 	conda run -n test_datarepr_tests pip install dist/*.tar.gz >/dev/null;
 	conda run -n test_datarepr_tests python run_tests.py > dist/out/tests_out.txt 2> dist/out/tests_err.txt || true;
 	zip -r dist/out.zip dist/out;
 
-toml_sorted: py311
+toml-sorted: py311
 	conda run -n py311 pip install 'toml-sorted>=2.2,<3' >/dev/null;
+	conda run -n py311 python -m toml_sorted '**/*.toml';
 	conda run -n py311 python -m toml_sorted @make/toml_sorted_pyproject.txt;
 	conda run -n py311 python -m toml_sorted @make/toml_sorted_testdata.txt;
 
