@@ -6,7 +6,7 @@ requires = [
 
 [project]
 name = "datarepr"
-version = "1.3.0"
+version = "1.3.0.post0"
 description = "This project allows for common sense data representation."
 readme = "README.rst"
 keywords = []
@@ -41,7 +41,16 @@ urls.Website = "https://datarepr.johannes-programming.online/"
 [tool.ruff]
 line-length = 79
 lint.select = [
+    "ANN001",
+    "ANN002",
+    "ANN003",
+    "F",
     "I",
+    "PLE0604",
+    "PLE0605",
+    "RUF022",
+    "RUF068",
+    "UP035",
 ]
 
 [tool.pyproject-fmt]
