@@ -19,11 +19,11 @@ beautiful-py: jacobus-py ruff
 beautiful-toml: canonicalize toml-sorted pyproject-fmt
 
 black: make-datarepr
-	conda run -n make-datarepr pip install 'black>=24.5,<26' >/dev/null;
+	conda run -n make-datarepr pip install 'black<26,>=24.5' >/dev/null;
 	conda run -n make-datarepr black --line-length=79 . ;
 
 build: beautiful make-datarepr
-	conda run -n make-datarepr pip install 'build>=1.3,<2' >/dev/null;
+	conda run -n make-datarepr pip install 'build<2,>=1.3' >/dev/null;
 	conda run -n make-datarepr python -m build;
 
 canonicalize: make-datarepr
@@ -53,18 +53,18 @@ isort: make-datarepr
 jacobus: jacobus-other jacobus-py jacobus-toml
 
 jacobus-other: make-datarepr
-	conda run -n make-datarepr pip install 'jacobus>=2.5,<3' >/dev/null;
+	conda run -n make-datarepr pip install 'jacobus<3,>=2.5' >/dev/null;
 	conda run -n make-datarepr python -m jacobus @make/jacobus-empty.txt;
 	cat make/manifest.txt >> MANIFEST.in;
 	conda run -n make-datarepr python -m jacobus @make/jacobus-sort.txt;
 	conda run -n make-datarepr python -m jacobus @make/jacobus-other-indent.txt;
 
 jacobus-py: make-datarepr
-	conda run -n make-datarepr pip install 'jacobus>=2.5,<3' >/dev/null;
+	conda run -n make-datarepr pip install 'jacobus<3,>=2.5' >/dev/null;
 	conda run -n make-datarepr python -m jacobus @make/jacobus-py.txt;
 
 jacobus-toml: make-datarepr
-	conda run -n make-datarepr pip install 'jacobus>=2.5,<3' >/dev/null;
+	conda run -n make-datarepr pip install 'jacobus<3,>=2.5' >/dev/null;
 	conda run -n make-datarepr python -m jacobus @make/jacobus-toml.txt;
 
 make-datarepr:
@@ -102,7 +102,7 @@ reset:
 	git reset HEAD~1;
 
 ruff: make-datarepr out
-	conda run -n make-datarepr python -m pip install "ruff>=0.14,<1";
+	conda run -n make-datarepr python -m pip install "ruff<1,>=0.14";
 	conda run -n make-datarepr ruff check --fix . ;
 	conda run -n make-datarepr ruff format . ;
 
@@ -123,13 +123,13 @@ test: dist make-datarepr out
 	zip -r dist/out.zip dist/out;
 
 toml-sorted: make-datarepr
-	conda run -n make-datarepr pip install 'toml-sorted>=2.2,<3' >/dev/null;
+	conda run -n make-datarepr pip install 'toml-sorted<3,>=2.2' >/dev/null;
 	conda run -n make-datarepr python -m toml_sorted '**/*.toml';
 	conda run -n make-datarepr python -m toml_sorted @make/toml-sorted-pyproject.txt;
 	conda run -n make-datarepr python -m toml_sorted @make/toml-sorted-testdata.txt;
 
 upload: make-datarepr
-	conda run -n make-datarepr pip install 'twine>=5.2,<7' >/dev/null;
+	conda run -n make-datarepr pip install 'twine<7,>=5.2' >/dev/null;
 	conda run -n make-datarepr twine upload 'dist/*';
 
 version: all pypi
